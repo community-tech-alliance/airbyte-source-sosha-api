@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "created_at": {
+        "type": ["string"]
+      },
+      "supported_social_networks": {
+        "type": ["object"]
+      },
+      "id": {
+        "type": ["string"]
+      },
+      "name": {
+        "type": ["string"]
+      }
+    }
+}
