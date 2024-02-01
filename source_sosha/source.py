@@ -41,13 +41,11 @@ class SourceSosha(HttpStream, ABC):
         super().__init__(**kwargs)
         self.config = config
         self.url_base = "https://share.climatepower.us/"
-        self.yesterday = self._get_unix_date(1)
-        self.year_ago = self._get_unix_date(366) #year ago from yesterday, assumes no leap year
+        self.yesterday = self._get_unix_date(date = dt.date.today() - dt.timedelta(days = 1))
+        self.start_date = self._get_unix_date(date = dt.datetime.strptime(config['start_date'],"%Y-%m-%d")) #must get start_date from partnerships
 
-    def _get_unix_date(self, timedelta_number):
-        start_date = dt.date.today() - dt.timedelta(days = timedelta_number)
-        start_date_dt = dt.datetime.fromordinal(start_date.toordinal())
-        unix_dt = time.mktime(start_date_dt.timetuple())
+    def _get_unix_date(self, date):
+        unix_dt = time.mktime(date.timetuple())
         return unix_dt
 
     def request_headers(
@@ -157,7 +155,7 @@ class CampaignInsights(SourceSosha):
         stream_slice: Optional[Mapping[str, Any]] = None,
         next_page_token: Optional[Mapping[str, Any]] = None,
     ) -> Optional[Mapping[str, Any]]:
-        params = {"start_date":self.year_ago,"end_date":self.yesterday}
+        params = {"start_date":self.start_date,"end_date":self.yesterday}
         return params
 
     def path(self,

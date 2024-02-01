@@ -5,9 +5,14 @@ connectionSpecification:
   type: object
   required:
     - api_key
+    - start_date
   properties:
     api_key:
       type: string
       airbyte_secret: true,
       order: 1,
       description: "API key used for authenticating to Sosha API."
+    start_date:
+      type: string
+      order: 2,
+      description: "The start date in the format of 'yyyy-mm-dd'. The start date is required."
